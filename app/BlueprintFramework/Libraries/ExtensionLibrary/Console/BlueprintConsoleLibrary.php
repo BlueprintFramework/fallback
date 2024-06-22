@@ -1,13 +1,13 @@
 <?php
 
-// Core file for the client-side library for Blueprint Extensions
+// Core file for the console library for Blueprint Extensions
 
 
-namespace Pterodactyl\BlueprintFramework\Libraries\ExtensionLibrary\Client;
+namespace Pterodactyl\BlueprintFramework\Libraries\ExtensionLibrary\Console;
 
 use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
 
-class BlueprintClientLibrary
+class BlueprintConsoleLibrary
 {
   // Construct core
   public function __construct(

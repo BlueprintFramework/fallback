@@ -13,7 +13,7 @@
   <a href="https://blueprint.zip" target="_blank"><button class="btn btn-gray-alt pull-right" style="padding: 5px 10px;"><i class="bx bx-link-external"></i></button></a>
   
   <!-- GitHub button -->
-  <a href="https://github.com/BlueprintFramework/main" class="pull-right" target="_blank">
+  <a href="https://github.com/BlueprintFramework/framework" class="pull-right" target="_blank">
     <button class="btn btn-gray-alt" style="padding: 5px 10px; margin-right: 7px;"><i class="bx bx-git-branch"></i></button>
     @if($ExtensionLibrary->dbGet("blueprint", "git-hint") != "0")
       <div class="blueprint:push-repo">
@@ -31,7 +31,6 @@
 @endsection
 
 @section('content')
-  {{ $TelemetryService->send("SERVE_BLUEPRINT_ADMIN") }}
   <p>Blueprint is the framework that powers all Blueprint-compatible extensions, enabling multiple extensions to be installed and used simultaneously.</p>
   <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -55,6 +54,7 @@
         </div>
         <div class="box-body">
           <div class="row">
+            <!-- Telemetry -->
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
               <label class="control-label">Telemetry</label>
               <select class="form-control" name="telemetry">
@@ -63,11 +63,13 @@
               </select>
               <p class="text-muted small">Automatically share anonymous usage data with Blueprint.</p>
             </div>
+            <!-- Identifier -->
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-              <label class="control-label">ID</label>
+              <label class="control-label">Identifer</label>
               <input type="text" required name="panel:id" id="panel:id" value="{{ $ExtensionLibrary->dbGet('blueprint', 'panel:id') }}" class="form-control" readonly/>
               <p class="text-muted small">Randomly generated string with your version that is used as a panel identifier.</p>
             </div>
+            <!-- Developer Mode -->
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
               <label class="control-label">Developer Mode</label>
               <select class="form-control" name="developer">

@@ -3,6 +3,7 @@
 namespace Pterodactyl\BlueprintFramework\Services\TelemetryService;
 use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
 use Pterodactyl\BlueprintFramework\Services\ConfigService\BlueprintConfigService;
+use Pterodactyl\BlueprintFramework\Services\PlaceholderService\BlueprintPlaceholderService;
 
 class BlueprintTelemetryService
 {
@@ -10,6 +11,7 @@ class BlueprintTelemetryService
   public function __construct(
     private SettingsRepositoryInterface $settings,
     private BlueprintConfigService $ConfigService,
+    private BlueprintPlaceholderService $PlaceholderService,
   ) {
   }
 
@@ -17,9 +19,8 @@ class BlueprintTelemetryService
     if ($this->settings->get('blueprint::telemetry') == "false") { return; };
 
     $curl = curl_init();
-
     curl_setopt_array($curl, array(
-      CURLOPT_URL => 'http://api.blueprint.zip:50000/send/'.$this->settings->get('blueprint::panel:id')."/".$event."/",
+      CURLOPT_URL => $this->PlaceholderService->api_url().'/send/'.$this->settings->get('blueprint::panel:id')."/".$event."/",
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => '',
       CURLOPT_MAXREDIRS => 10,
@@ -29,10 +30,8 @@ class BlueprintTelemetryService
       CURLOPT_CUSTOMREQUEST => 'GET',
       CURLOPT_CONNECTTIMEOUT => 2,
     ));
-
-    $response = curl_exec($curl);
-
     curl_close($curl);
+
     $this->ConfigService->config('TELEMETRY_ID',$this->settings->get("blueprint::panel:id"));
     return;
   }
